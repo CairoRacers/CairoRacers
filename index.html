@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cairo Racers - Assetto Corsa Community</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0d0d0d;
+            color: #f0f0f0;
+            overflow-x: hidden;
+        }
+
+        .hover-underline-animation {
+            position: relative;
+        }
+
+        .hover-underline-animation::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            transform: scaleX(0);
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: #e53e3e;
+            transform-origin: bottom right;
+            transition: transform 0.25s ease-out;
+        }
+
+        .hover-underline-animation:hover::after {
+            transform: scaleX(1);
+            transform-origin: bottom left;
+        }
+
+        .button-hover-effect {
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .button-hover-effect::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 300%;
+            height: 300%;
+            background: rgba(255, 255, 255, 0.1);
+            transition: all 0.4s ease-in-out;
+            transform: translate(-50%, -50%) rotate(45deg);
+            z-index: -1;
+        }
+        
+        .button-hover-effect:hover::after {
+            transform: translate(-50%, -50%) rotate(0deg);
+        }
+
+        .gradient-text {
+            background-image: linear-gradient(to right, #e53e3e, #c05621);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    </style>
+</head>
+<body class="bg-[#1a1a1a]">
+
+    <!-- Header -->
+    <header class="bg-[#1a1a1a] text-white p-6 md:px-12 flex justify-between items-center fixed top-0 left-0 w-full z-50 shadow-lg">
+        <div class="flex items-center space-x-4">
+            <!-- Logo -->
+            <img src="https://i.postimg.cc/6p5SRXMn/3550-A7-F3-9-F9-F-4-B19-A37-F-09-F1618-E58-EA.png" alt="Cairo Racers Logo" class="h-10 md:h-12 rounded-lg">
+            <span class="text-2xl md:text-3xl font-bold gradient-text">CAIRO RACERS</span>
+        </div>
+        <!-- Navigation -->
+        <nav class="hidden md:flex items-center space-x-8 lg:space-x-12">
+            <a href="#" data-page="home-page" class="nav-link text-white text-lg font-medium hover:text-red-500 transition-colors duration-300 hover-underline-animation">Home</a>
+            <a href="#" data-page="server-page" class="nav-link text-white text-lg font-medium hover:text-red-500 transition-colors duration-300 hover-underline-animation">Server</a>
+            <a href="#" data-page="support-page" class="nav-link text-white text-lg font-medium hover:text-red-500 transition-colors duration-300 hover-underline-animation">Support</a>
+            <a href="#" data-page="graphics-page" class="nav-link text-white text-lg font-medium hover:text-red-500 transition-colors duration-300 hover-underline-animation">Graphics</a>
+            <a href="#" data-page="contact-us-page" class="nav-link text-white text-lg font-medium hover:text-red-500 transition-colors duration-300 hover-underline-animation">Contact Us</a>
+        </nav>
+        <!-- Mobile Menu Button -->
+        <button id="mobile-menu-button" class="md:hidden text-white focus:outline-none">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+        </button>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="hidden md:hidden fixed top-0 left-0 w-full h-full bg-[#1a1a1a] flex flex-col items-center justify-center space-y-8 z-40 transition-transform duration-300 transform -translate-x-full">
+        <button id="close-mobile-menu" class="absolute top-6 right-6 text-white focus:outline-none">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+        </button>
+        <a href="#" data-page="home-page" class="mobile-nav-link text-white text-3xl font-medium hover:text-red-500 transition-colors duration-300">Home</a>
+        <a href="#" data-page="server-page" class="mobile-nav-link text-white text-3xl font-medium hover:text-red-500 transition-colors duration-300">Server</a>
+        <a href="#" data-page="support-page" class="mobile-nav-link text-white text-3xl font-medium hover:text-red-500 transition-colors duration-300">Support</a>
+        <a href="#" data-page="graphics-page" class="mobile-nav-link text-white text-3xl font-medium hover:text-red-500 transition-colors duration-300">Graphics</a>
+        <a href="#" data-page="contact-us-page" class="mobile-nav-link text-white text-3xl font-medium hover:text-red-500 transition-colors duration-300">Contact Us</a>
+    </div>
+
+    <!-- Main Content Container -->
+    <main id="main-content" class="pt-24 md:pt-32 p-4 md:p-8">
+        
+        <!-- Home Section (Page) -->
+        <section id="home-page" class="page-section">
+            <div class="max-w-7xl mx-auto flex flex-col lg:flex-row items-center justify-between p-6 md:p-12 bg-[#1a1a1a] rounded-xl shadow-2xl space-y-8 lg:space-y-0 lg:space-x-12">
+                <!-- Left side content -->
+                <div class="flex-1 text-center lg:text-left space-y-6 md:space-y-8">
+                    <h1 class="text-5xl sm:text-6xl md:text-7xl font-extrabold leading-tight">
+                        <span class="gradient-text">CAIRO RACERS</span> <br class="hidden md:block">
+                        <span class="text-white text-2xl sm:text-3xl md:text-4xl">Virtual Racing Community</span>
+                    </h1>
+                    <p class="text-lg md:text-xl text-gray-300 max-w-2xl mx-auto lg:mx-0">
+                        Join our thriving community of virtual car enthusiasts and experience the thrill of exotic street racing, tuned builds, and pure automotive culture - all powered by Assetto Corsa. From realistic servers to custom cars and epic events, this is where style meets speed, and the streets come alive.
+                    </p>
+                    <!-- Action Buttons -->
+                    <div class="flex flex-col sm:flex-row justify-center lg:justify-start space-y-4 sm:space-y-0 sm:space-x-4 mt-8">
+                        <a href="#" data-page="server-page" class="inline-block px-8 py-3 bg-red-600 text-white font-semibold rounded-full shadow-lg hover:bg-red-700 transition-colors duration-300 button-hover-effect page-link">JOIN US NOW</a>
+                        <a href="#" data-page="graphics-page" class="inline-block px-8 py-3 bg-gray-700 text-white font-semibold rounded-full shadow-lg hover:bg-gray-800 transition-colors duration-300 button-hover-effect page-link">BUY GRAPHICS PACK</a>
+                    </div>
+                    <!-- Additional Link for the Game -->
+                    <a href="#" class="block text-center lg:text-left text-blue-400 hover:text-blue-500 transition-colors duration-300 mt-4 underline">
+                       
+                    </a>
+                </div>
+
+                <!-- Right side logo/image -->
+                <div class="flex-1 flex justify-center lg:justify-end">
+                    <img src="https://i.postimg.cc/6p5SRXMn/3550-A7-F3-9-F9-F-4-B19-A37-F-09-F1618-E58-EA.png" alt="Cairo Racers Logo" class="max-w-sm md:max-w-md lg:max-w-lg w-full h-auto rounded-xl">
+                </div>
+            </div>
+            <!-- What We Offer Section moved here as part of the home page -->
+            <section class="max-w-7xl mx-auto mt-24">
+                <h2 class="text-center text-4xl sm:text-5xl font-extrabold mb-12">What We Offer</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- Custom Assetto Corsa Server Card -->
+                    <div class="bg-[#1a1a1a] p-8 rounded-xl shadow-2xl border border-gray-700">
+                        <h3 class="text-3xl font-bold mb-4 gradient-text">Custom Assetto Corsa Server</h3>
+                        <p class="text-lg text-gray-300">
+                            Take control of your racing experience with a server built just for you. Whether you're hosting private events, training sessions, or full-on league races, our custom servers offer unmatched performance, full mod support, and easy management — tailored exactly to your needs.
+                        </p>
+                    </div>
+                    <!-- Custom Car Creation Card -->
+                    <div class="bg-[#1a1a1a] p-8 rounded-xl shadow-2xl border border-gray-700">
+                        <h3 class="text-3xl font-bold mb-4 gradient-text">Custom Car Creation</h3>
+                        <p class="text-lg text-gray-300">
+                            Stand out on the track with a car that's uniquely yours. We offer fully custom car design — from visuals to performance tuning — tailored to your style and needs. Perfect for events, teams, or anyone looking for a personalized racing experience.
+                        </p>
+                    </div>
+                    <!-- Game & Graphics Installation Card -->
+                    <div class="bg-[#1a1a1a] p-8 rounded-xl shadow-2xl border border-gray-700">
+                        <h3 class="text-3xl font-bold mb-4 gradient-text">Game & Graphics Installation</h3>
+                        <p class="text-lg text-gray-300">
+                            We handle the full setup so you don't have to. From installing the game to optimizing graphics, mods, and performance settings — we make sure everything runs smoothly and looks stunning, right out of the box.
+                        </p>
+                    </div>
+                </div>
+                <div class="text-center mt-12">
+                    <a href="#" data-page="server-page" class="inline-block px-12 py-4 bg-white text-gray-900 font-semibold rounded-full shadow-lg hover:bg-gray-200 transition-colors duration-300 button-hover-effect page-link">ORDER NOW</a>
+                </div>
+            </section>
+        </section>
+
+        <!-- Server Section (Page) -->
+        <section id="server-page" class="page-section hidden">
+            <div class="max-w-7xl mx-auto pt-4 p-4 md:p-8 min-h-screen">
+                <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold text-center leading-tight gradient-text mb-4">
+                    Join Our Server
+                </h1>
+                <p class="text-lg md:text-xl text-gray-300 max-w-2xl mx-auto text-center mb-12">
+                    Click on any of the car images below to instantly connect to our Assetto Corsa server and start racing!
+                </p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Car Images as links -->
+                    <a href="https://acstuff.club/s/q:race/online/join?ip=192.168.8.108&httpPort=8081" target="_blank" class="w-full h-auto rounded-lg overflow-hidden transform transition-transform duration-300 hover:scale-105">
+                        <img src="https://i.postimg.cc/Nf7FF1nL/Screenshot-mitsubishi-evo-6-hellspec-forum-31-6-125-2-55-2.jpg" alt="Mitsubishi Evo 6" class="w-full h-auto object-cover rounded-lg shadow-lg border border-gray-700">
+                    </a>
+                    <a href="https://acstuff.club/s/q:race/online/join?ip=192.168.8.108&httpPort=8081" target="_blank" class="w-full h-auto rounded-lg overflow-hidden transform transition-transform duration-300 hover:scale-105">
+                        <img src="https://i.postimg.cc/bYnscXHx/Screenshot-hm-audi-r8-2020-rwd-shuto-revival-project-beta-13-7-125-16-4-57.jpg" alt="Audi R8 with sunset reflection" class="w-full h-auto object-cover rounded-lg shadow-lg border border-gray-700">
+                    </a>
+                    <a href="https://acstuff.club/s/q:race/online/join?ip=192.168.8.108&httpPort=8081" target="_blank" class="w-full h-auto rounded-lg overflow-hidden transform transition-transform duration-300 hover:scale-105">
+                        <img src="https://i.postimg.cc/hPqhKCpH/Screenshot-hm-audi-r8-2020-rwd-shuto-revival-project-beta-13-7-125-15-59-50.jpg" alt="Audi R8 from the back at night" class="w-full h-auto object-cover rounded-lg shadow-lg border border-gray-700">
+                    </a>
+                    <a href="https://acstuff.club/s/q:race/online/join?ip=192.168.8.108&httpPort=8081" target="_blank" class="w-full h-auto rounded-lg overflow-hidden transform transition-transform duration-300 hover:scale-105">
+                        <img src="https://i.postimg.cc/Z5wqFJ4S/Screenshot-hm-audi-r8-2020-rwd-shuto-revival-project-beta-13-7-125-15-51-52.jpg" alt="Audi R8 close-up" class="w-full h-auto object-cover rounded-lg shadow-lg border border-gray-700">
+                    </a>
+                    <a href="https://acstuff.club/s/q:race/online/join?ip=192.168.8.108&httpPort=8081" target="_blank" class="w-full h-auto rounded-lg overflow-hidden transform transition-transform duration-300 hover:scale-105">
+                        <img src="https://i.postimg.cc/BnS6KjWp/Screenshot-bmw-cairo-racers-shuto-revival-project-beta-26-7-125-15-32-27.jpg" alt="BMW on the highway" class="w-full h-auto object-cover rounded-lg shadow-lg border border-gray-700">
+                    </a>
+                     <a href="https://acstuff.club/s/q:race/online/join?ip=192.168.8.108&httpPort=8081" target="_blank" class="w-full h-auto rounded-lg overflow-hidden transform transition-transform duration-300 hover:scale-105">
+                        <img src="https://i.postimg.cc/gJCjX4dL/Screenshot-bkxhm-nissan-gtr-21-rb-kit-forum-31-6-125-2-57-20.jpg" alt="Nissan GTR with flames from exhaust" class="w-full h-auto object-cover rounded-lg shadow-lg border border-gray-700">
+                    </a>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Support Section (Page) -->
+        <section id="support-page" class="page-section hidden">
+            <div class="max-w-4xl mx-auto pt-4 p-4 md:p-8 min-h-screen">
+                <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold text-center leading-tight gradient-text mb-12">
+                    Support
+                </h1>
+                <div class="bg-[#1a1a1a] p-8 md:p-12 rounded-xl shadow-2xl space-y-6">
+                    <h2 class="text-3xl font-bold mb-6 text-center md:text-left">Common Problems & Solutions</h2>
+                    <div class="space-y-6">
+                        <div>
+                            <h3 class="text-xl font-semibold mb-2">CSP Bypass Issue</h3>
+                            <p class="text-gray-400">This often happens when your game or server requires a specific version of Custom Shaders Patch. To fix it, open Content Manager, go to the 'Custom Shaders Patch' settings, and install the latest recommended version. This will resolve most bypass errors and let you join the server.</p>
+                            
+                            
+                                
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-semibold mb-2">Missing DLC Error</h3>
+                            <p class="text-gray-400">Missing DLC Error you can bypass the error by downloading this file https://drive.google.com/uc?export=download&id=1OSApLOeQ-ieeCylRtHemBxlPrKyo7O1X from here or the discord Server.</p>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-semibold mb-2">Game & Graphic Packs</h3>
+                            <p class="text-gray-400">Our community also sells essential tools to enhance your racing experience. You can get the official game, Pure, Custom Shaders Patch (CSP), and a variety of graphics packs directly through our server. This ensures you have all the necessary files to join our races and enjoy the best visual quality.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Graphics Page (New Section) -->
+        <section id="graphics-page" class="page-section hidden">
+            <div class="max-w-7xl mx-auto pt-4 p-4 md:p-8 min-h-screen">
+                <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold text-center leading-tight gradient-text mb-12">
+                    Graphics & Store
+                </h1>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Graphics Pack Card -->
+                    <div class="bg-[#1a1a1a] p-8 rounded-xl shadow-2xl border border-gray-700 flex flex-col items-center text-center">
+                        <img src="https://placehold.co/400x250/333333/ffffff?text=Graphics+Pack" alt="Graphics Pack" class="w-full h-auto rounded-lg mb-4">
+                        <h3 class="text-3xl font-bold mb-2 gradient-text">Graphics Pack</h3>
+                        <p class="text-lg text-gray-300 mb-4">Enhance your game with our custom graphics pack, featuring realistic lighting, weather effects, and textures.</p>
+                        <span class="text-4xl font-extrabold text-red-500 mb-6">150 EGP</span>
+                        <a href="#" class="inline-block px-8 py-3 bg-red-600 text-white font-semibold rounded-full shadow-lg hover:bg-red-700 transition-colors duration-300 button-hover-effect">BUY NOW</a>
+                    </div>
+                    <!-- Assetto Corsa Crack Card -->
+                    <div class="bg-[#1a1a1a] p-8 rounded-xl shadow-2xl border border-gray-700 flex flex-col items-center text-center">
+                        <img src="https://placehold.co/400x250/333333/ffffff?text=Assetto+Corsa+Crack" alt="Assetto Corsa Crack" class="w-full h-auto rounded-lg mb-4">
+                        <h3 class="text-3xl font-bold mb-2 gradient-text">Assetto Corsa Crack</h3>
+                        <p class="text-lg text-gray-300 mb-4">Get access to the full game with all essential features and a simple installation process.</p>
+                        <span class="text-4xl font-extrabold text-red-500 mb-6">100 EGP</span>
+                        <a href="#" class="inline-block px-8 py-3 bg-red-600 text-white font-semibold rounded-full shadow-lg hover:bg-red-700 transition-colors duration-300 button-hover-effect">BUY NOW</a>
+                    </div>
+                    <!-- Assetto Corsa Original Card -->
+                    <div class="bg-[#1a1a1a] p-8 rounded-xl shadow-2xl border border-gray-700 flex flex-col items-center text-center">
+                        <img src="https://i.postimg.cc/13VsD5qw/Screenshot-2025-10-19-100100.png" alt="Assetto Corsa Original" class="w-full h-auto rounded-lg mb-4">
+                        <h3 class="text-3xl font-bold mb-2 gradient-text">Assetto Corsa Original</h3>
+                        <p class="text-lg text-gray-300 mb-4">Purchase the official Assetto Corsa game, supporting the developers and ensuring a seamless experience.</p>
+                        <span class="text-4xl font-extrabold text-red-500 mb-6">350 EGP</span>
+                        <a href="#" class="inline-block px-8 py-3 bg-red-600 text-white font-semibold rounded-full shadow-lg hover:bg-red-700 transition-colors duration-300 button-hover-effect">BUY NOW</a>
+                    </div>
+                </div>
+				</div>
+                    </div>
+            </div>
+        </section>
+
+        <!-- Contact Us Section (Page) -->
+        <section id="contact-us-page" class="page-section hidden">
+            <div class="max-w-4xl mx-auto pt-4 p-4 md:p-8">
+                <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold text-center leading-tight gradient-text mb-12">
+                    Contact Us
+                </h1>
+                <div class="bg-[#1a1a1a] p-8 md:p-12 rounded-xl shadow-2xl space-y-8">
+                    <!-- Get In Touch Info & Socials -->
+                    <div class="space-y-4 text-center">
+                        <h2 class="text-3xl font-bold">Get In Touch</h2>
+                        <p class="text-lg text-gray-400 max-w-2xl mx-auto">
+                            We'd love to hear from you! Whether you have questions about our events, want to collaborate, or just want to say hello, feel free to reach out.
+                        </p>
+                        <div class="space-y-4">
+                            <h3 class="text-xl font-semibold">Email</h3>
+                            <a href="mailto:trafficcutup@gmail.com" class="text-blue-400 hover:text-blue-500 transition-colors duration-300">trafficcutup@gmail.com</a>
+                        </div>
+                        <div class="space-y-4">
+                            <h3 class="text-xl font-semibold">Socials</h3>
+                            <div class="flex justify-center md:justify-center space-x-4 text-2xl">
+                                <a href="https://discord.gg/HPY576fyVE" target="_blank" class="text-white hover:text-red-500 transition-colors duration-300" title="Join our Discord Server">
+                                    <i class="fab fa-discord"></i>
+                                </a>
+                                <a href="https://www.tiktok.com/@cairo_racers" target="_blank" class="text-white hover:text-red-500 transition-colors duration-300" title="Follow us on TikTok">
+                                    <i class="fab fa-tiktok"></i>
+                                </a>
+                                <a href="https://www.instagram.com/cairo_racers?igsh=MWluMzkzamc2bHd4ag==" target="_blank" class="text-white hover:text-red-500 transition-colors duration-300" title="Follow us on Instagram">
+                                    <i class="fab fa-instagram"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Spacer Line -->
+                    <div class="h-px bg-gray-700 w-full my-8"></div>
+                    
+               
+
+    <!-- Footer -->
+    <footer class="bg-[#1a1a1a] text-gray-400 text-center py-6 mt-12">
+        <div class="max-w-7xl mx-auto px-4">
+            <p>&copy; 2025 Cairo Racers. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const closeMobileMenu = document.getElementById('close-mobile-menu');
+
+            // Get all page links
+            const navLinks = document.querySelectorAll('.nav-link, .mobile-nav-link, .page-link');
+            const pageSections = document.querySelectorAll('.page-section');
+
+            // Function to show a specific page
+            function showPage(pageId) {
+                // Hide all pages
+                pageSections.forEach(section => {
+                    section.classList.add('hidden');
+                });
+                // Show the selected page
+                document.getElementById(pageId).classList.remove('hidden');
+
+                // Update active link styling (optional but good for UX)
+                navLinks.forEach(link => {
+                    if (link.dataset.page === pageId) {
+                        link.classList.add('text-red-500'); // Or another active state class
+                    } else {
+                        link.classList.remove('text-red-500');
+                    }
+                });
+            }
+
+            // Add event listeners to all links
+            navLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const pageId = link.dataset.page;
+                    if (pageId) {
+                        showPage(pageId);
+                        // Close mobile menu if open
+                        mobileMenu.classList.add('-translate-x-full');
+                        setTimeout(() => {
+                            mobileMenu.classList.add('hidden');
+                        }, 300);
+                    }
+                });
+            });
+
+            // Mobile menu functionality
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.remove('hidden');
+                setTimeout(() => {
+                    mobileMenu.classList.remove('-translate-x-full');
+                }, 10);
+            });
+
+            closeMobileMenu.addEventListener('click', () => {
+                mobileMenu.classList.add('-translate-x-full');
+                setTimeout(() => {
+                    mobileMenu.classList.add('hidden');
+                }, 300);
+            });
+
+            // Show the initial page
+            showPage('home-page');
+        });
+    </script>
+</body>
+</html>
